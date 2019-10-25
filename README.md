@@ -30,3 +30,19 @@ Lets start out with a simple example using the Anomaly object. Here we are going
 
 ![GitHub Logo](/images/anomaly.png)
 Format: ![Alt Text](url)
+
+We can easily modify the shape and amplitude functions that are applied.
+
+
+
+a.set_shape(shape.Sinusoidal)
+a.set_adjust_amplitude(amplitudes.LinearSpike)
+
+data = a.modify_signal(np.zeros(1000), sample_rate=100)
+fig = plt.figure(); fig.layout.width='100%'; plt.plot(data); fig
+
+
+![GitHub Logo](/images/anomaly2.png)
+Format: ![Alt Text](url)
+
+For more in depth tutorial see the example notebooks.
