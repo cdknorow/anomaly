@@ -38,6 +38,7 @@ class Anomaly(object):
         self._anomaly_frequency = None
         self._num_cycles = None
         self._noise_scale = None
+        self._property_log = []
 
     def _update_properties(self):
         self._amplitude = np.random.choice(self._amplitude_range)
@@ -72,6 +73,24 @@ class Anomaly(object):
     @property
     def num_cycles(self):
         return self._num_cycles
+
+    @property
+    def anomaly_description(self):
+        return self._property_log
+
+    def _reset_property_log(self):
+        self._property_log = []
+
+    def _log_properties(self, index, duration):
+        self._property_log.append(
+            {
+                "amplitude": self.amplitude,
+                "anomaly_frequency": self.anomaly_frequency,
+                "num_cycles": self.num_cycles,
+                "index": index,
+                "duration": duration,
+            }
+        )
 
     def _shape(self):
         """ Determines the shape of the anomaly, this function can be overidden for different shapes cases """
@@ -109,6 +128,8 @@ class Anomaly(object):
         return anomaly.astype(self._get_input_data_type(y))
 
     def _generate(self, y):
+        self._reset_property_log()
+
         for i in range(len(y)):
             if not self.anomaly_locations or i in self.anomaly_locations:
                 if random.random() < self.anomaly_rate:
@@ -116,6 +137,7 @@ class Anomaly(object):
                     anomaly = self._shape()
                     anomaly = self._adjust_amplitude(anomaly)
                     anomaly = self._cast_anomaly_type(anomaly, y)
+                    self._log_properties(i, len(anomaly))
                     if len(anomaly) + i > len(y):
                         continue
                     y[i : i + len(anomaly)] += anomaly
