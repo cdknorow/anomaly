@@ -44,7 +44,11 @@ class Anomaly(object):
         self._amplitude = np.random.choice(self._amplitude_range)
         self._anomaly_frequency = np.random.choice(self._frequency_range)
         self._num_cycles = np.random.choice(self._cycle_range)
-        self._noise_scale = np.random.choice(self._noise_range)
+
+        if self._noise_range:
+            self._noise_scale = np.random.choice(self._noise_range)
+        else:
+            self._noise_scale = None
 
     @property
     def noise_scale(self):
