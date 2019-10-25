@@ -30,8 +30,7 @@ Note: This project is early alpha and API's may change
     fig = plt.figure(); fig.layout.width='100%'; plt.plot(data); fig
 
 
-![GitHub Logo](/images/anomaly.png)
-Format: ![Alt Text](url)
+![Anomaly 1](/images/anomaly.png)
 
 We can easily modify the shape and amplitude functions that are applied.
 
@@ -44,7 +43,6 @@ data = a.modify_signal(np.zeros(1000), sample_rate=100)
 fig = plt.figure(); fig.layout.width='100%'; plt.plot(data); fig
 
 
-![GitHub Logo](/images/anomaly2.png)
-Format: ![Alt Text](url)
+![Anomaly 2](/images/anomaly2.png)
 
 For more in depth tutorial see the example notebooks.
