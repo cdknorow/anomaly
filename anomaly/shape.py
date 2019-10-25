@@ -27,12 +27,11 @@ class Peak(object):
 
 class Square(object):
     def _shape(self):
-        anomaly_frequency = np.random.choice(self._frequency_range)
-        num_cycles = np.random.choice(self._cycle_range)
-        amplitude = np.random.choice(self._amplitude_range)
 
-        x = np.arange(0, num_cycles / (anomaly_frequency), 1 / self.sample_rate)
+        x = np.arange(
+            0, self.num_cycles / (self.anomaly_frequency), 1 / self.sample_rate
+        )
 
-        y = signal.square(2 * np.pi * x * anomaly_frequency)
+        y = signal.square(2 * np.pi * x * self.anomaly_frequency)
 
         return y
