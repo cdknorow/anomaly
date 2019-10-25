@@ -34,13 +34,11 @@ Note: This project is early alpha and API's may change
 
 We can easily modify the shape and amplitude functions that are applied.
 
+    a.set_shape(shape.Sinusoidal)
+    a.set_adjust_amplitude(amplitudes.LinearSpike)
 
-
-a.set_shape(shape.Sinusoidal)
-a.set_adjust_amplitude(amplitudes.LinearSpike)
-
-data = a.modify_signal(np.zeros(1000), sample_rate=100)
-fig = plt.figure(); fig.layout.width='100%'; plt.plot(data); fig
+    data = a.modify_signal(np.zeros(1000), sample_rate=100)
+    fig = plt.figure(); fig.layout.width='100%'; plt.plot(data); fig
 
 
 ![Anomaly 2](/images/anomaly2.png)
