@@ -134,18 +134,23 @@ class Anomaly(object):
     def _generate(self, y):
         self._reset_property_log()
 
-        for i in range(len(y)):
+        i = 0
+        while i < len(y):
             if not self.anomaly_locations or i in self.anomaly_locations:
+
                 if random.random() < self.anomaly_rate:
                     self._update_properties()
                     anomaly = self._shape()
                     anomaly = self._adjust_amplitude(anomaly)
                     anomaly = self._cast_anomaly_type(anomaly, y)
-                    self._log_properties(i, len(anomaly))
                     if len(anomaly) + i > len(y):
+                        i += 1
                         continue
+                    self._log_properties(i, len(anomaly))
                     y[i : i + len(anomaly)] += anomaly
                     i += len(anomaly)
+                else:
+                    i += 1
 
         y = self._add_noise(y)
 
