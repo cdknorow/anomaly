@@ -95,7 +95,7 @@ class Anomaly(object):
     def _reset_property_log(self):
         self._property_log = []
 
-    def _log_properties(self, index, duration):
+    def _log_properties(self, index, duration, anomaly):
         self._property_log.append(
             {
                 "amplitude": self.amplitude,
@@ -103,6 +103,7 @@ class Anomaly(object):
                 "num_cycles": self.num_cycles,
                 "index": index,
                 "duration": duration,
+                "anomaly": anomaly,
             }
         )
 
@@ -155,7 +156,7 @@ class Anomaly(object):
                     if len(anomaly) + i > len(y):
                         i += 1
                         continue
-                    self._log_properties(i, len(anomaly))
+                    self._log_properties(i, len(anomaly), anomaly)
                     y[i : i + len(anomaly)] += anomaly
                     i += len(anomaly)
 
