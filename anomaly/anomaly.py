@@ -24,6 +24,7 @@ class Anomaly(object):
         anomaly_rate=0.001,
         anomaly_locations=None,
         noise_range=None,
+        random_phase=False,
         **kwargs
     ):
         self._anomaly_rate = anomaly_rate
@@ -33,22 +34,31 @@ class Anomaly(object):
         self._noise_range = noise_range
         self._anomaly_locations = anomaly_locations
         self._extra_params = kwargs
+        self._random_phase = random_phase
 
         self._amplitude = None
         self._anomaly_frequency = None
         self._num_cycles = None
         self._noise_scale = None
         self._property_log = []
+        self._phase = 0
 
     def _update_properties(self):
         self._amplitude = np.random.choice(self._amplitude_range)
         self._anomaly_frequency = np.random.choice(self._frequency_range)
         self._num_cycles = np.random.choice(self._cycle_range)
 
+        if self._random_phase:
+            self._phase = np.random.random() * 2 * np.pi
+
         if self._noise_range:
             self._noise_scale = np.random.choice(self._noise_range)
         else:
             self._noise_scale = None
+
+    @property
+    def phase(self):
+        return self._phase
 
     @property
     def noise_scale(self):
@@ -137,7 +147,6 @@ class Anomaly(object):
         i = 0
         while i < len(y):
             if not self.anomaly_locations or i in self.anomaly_locations:
-
                 if random.random() < self.anomaly_rate:
                     self._update_properties()
                     anomaly = self._shape()
@@ -149,8 +158,8 @@ class Anomaly(object):
                     self._log_properties(i, len(anomaly))
                     y[i : i + len(anomaly)] += anomaly
                     i += len(anomaly)
-                else:
-                    i += 1
+
+            i += 1
 
         y = self._add_noise(y)
 

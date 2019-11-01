@@ -9,7 +9,7 @@ class Sinusoidal(object):
             0, self.num_cycles / (self.anomaly_frequency), 1 / self.sample_rate
         )
 
-        y = np.sin(2 * np.pi * x * self.anomaly_frequency)
+        y = np.sin(2 * np.pi * x * self.anomaly_frequency + self.phase)
 
         return y
 
@@ -20,7 +20,7 @@ class Peak(object):
             0, self.num_cycles / (self.anomaly_frequency), 1 / self.sample_rate
         )
 
-        y = abs(np.sin(2 * np.pi * x * self.anomaly_frequency))
+        y = abs(np.sin(2 * np.pi * x * self.anomaly_frequency) + self.phase)
 
         return y
 
@@ -32,6 +32,6 @@ class Square(object):
             0, self.num_cycles / (self.anomaly_frequency), 1 / self.sample_rate
         )
 
-        y = signal.square(2 * np.pi * x * self.anomaly_frequency)
+        y = signal.square(2 * np.pi * x * self.anomaly_frequency + self.phase)
 
         return y
